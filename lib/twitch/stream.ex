@@ -14,9 +14,7 @@ defmodule Twitch.Stream do
     channel: %Twitch.Channel{}
 
   def all do
-    "/streams"
-    |> ResultStream.new
-    |> Stream.map(&from_map/1)
+    stream_path("/streams")
   end
 
   def search(query) do
@@ -33,7 +31,6 @@ defmodule Twitch.Stream do
   end
 
   def from_map(map) do
-    IO.inspect map
     atom_map = for {key, val} <- map, into: %{}, do: {String.to_atom(key), val}
 
     map = atom_map
@@ -48,7 +45,7 @@ defmodule Twitch.Stream do
 
   defp stream_path(path) do
     path
-    |> ResultStream.new
+    |> ResultStream.new("streams")
     |> Stream.map(&from_map/1)
   end
 end

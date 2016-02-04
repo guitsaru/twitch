@@ -1,35 +1,35 @@
 defmodule Twitch.ResultStream do
-  def new(path) do
-    Stream.resource(fn -> fetch_page(path) end,
-      &process_page/1,
+  def new(path, key) do
+    Stream.resource(fn -> fetch_page(path, key) end,
+      fn {items, next_page} -> process_page({items, next_page}, key) end,
       fn _ -> nil end
     )
   end
 
-  defp fetch_page(path) do
+  defp fetch_page(path, key) do
     json = path |> Twitch.get! |> Map.fetch!(:body) |> Poison.decode!
 
-    streams = get_in(json, ["streams"])
-    next    = get_in(json, ["_links", "next"]) |> String.replace("https://api.twitch.tv/kraken", "")
+    items = get_in(json, [key])
+    next  = get_in(json, ["_links", "next"]) |> String.replace("https://api.twitch.tv/kraken", "")
 
-    {streams, next}
+    {items, next}
   end
 
-  defp process_page({nil, nil}) do
+  defp process_page({nil, nil}, _) do
     {:halt, nil}
   end
 
-  defp process_page({[], _}) do
+  defp process_page({[], _}, _) do
     {:halt, nil}
   end
 
-  defp process_page({nil, next_page}) do
+  defp process_page({nil, next_page}, key) do
     next_page
-    |> fetch_page
-    |> process_page
+    |> fetch_page(key)
+    |> process_page(key)
   end
 
-  defp process_page({items, next_page}) do
+  defp process_page({items, next_page}, _) do
     {items, {nil, next_page}}
   end
 end
