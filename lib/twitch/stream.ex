@@ -21,6 +21,12 @@ defmodule Twitch.Stream do
     stream_path("/search/streams?query=#{query}")
   end
 
+  def featured do
+    "/streams/featured"
+    |> ResultStream.new("featured")
+    |> Stream.map(&Twitch.Stream.Featured.from_map/1)
+  end
+
   def get(name) do
     "/streams/#{name}"
     |> Twitch.get!
@@ -47,5 +53,26 @@ defmodule Twitch.Stream do
     path
     |> ResultStream.new("streams")
     |> Stream.map(&from_map/1)
+  end
+end
+
+defmodule Twitch.Stream.Featured do
+  defstruct image: "",
+    text: "",
+    title: "",
+    sponsored: false,
+    scheduled: false,
+    preview: %{},
+    stream: %Twitch.Stream{}
+
+  def from_map(map) do
+    atom_map = for {key, val} <- map, into: %{}, do: {String.to_atom(key), val}
+
+    map = atom_map
+    |> Map.take(Map.keys(%Twitch.Stream.Featured{}))
+    |> Map.drop([:stream])
+    |> Map.put(:stream, Twitch.Stream.from_map(map["stream"]))
+
+    struct(Twitch.Stream.Featured, map)
   end
 end

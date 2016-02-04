@@ -9,6 +9,7 @@ This library is Stream based for any endpoints that return multiple resources.
 ```elixir
 Twitch.Stream.all |> Enum.take(5)
 Twitch.Stream.search("Hearthstone") |> Enum.take(5)
+Twitch.Stream.featured |> Enum.take(5)
 Twitch.Game.top |> Enum.take(5)
 
 Twitch.Stream.get("twitch")
