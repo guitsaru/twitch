@@ -29,14 +29,16 @@ defmodule Twitch.Video do
     |> Stream.map(&from_map/1)
   end
 
-  def top do
-    "/videos/top"
+  def top(game_or_period \\ "week", period \\ "week")
+
+  def top(period, _) when is_binary(period) do
+    "/videos/top?period=#{period}"
     |> ResultStream.new("videos")
     |> Stream.map(&from_map/1)
   end
 
-  def top(%Twitch.Game{name: game}) do
-    "/videos/top?game=#{URI.encode(game)}"
+  def top(%Twitch.Game{name: game}, period) do
+    "/videos/top?game=#{URI.encode(game)}&period=#{period}"
     |> ResultStream.new("videos")
     |> Stream.map(&from_map/1)
   end
