@@ -35,6 +35,12 @@ defmodule Twitch.Video do
     |> Stream.map(&from_map/1)
   end
 
+  def top(%Twitch.Game{name: game}) do
+    "/videos/top?game=#{URI.encode(game)}"
+    |> ResultStream.new("videos")
+    |> Stream.map(&from_map/1)
+  end
+
   def get(id) do
     "/videos/#{id}"
     |> Twitch.get!

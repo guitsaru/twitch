@@ -19,6 +19,7 @@ Twitch.Channel.get("twitch")
 Twtich.Channel.search("Hearthstone") |> Enum.take(5)
 
 Twitch.Video.top |> Enum.take(5)
+Twitch.Game.top |> Enum.fetch!(0) |> Map.fetch!(:game) |> Twitch.Video.top |> Enum.take(5)
 "twitch" |> Twitch.Channel.get |> Twitch.Video.all |> Enum.take(5)
 Twitch.Video.get("v39161838")
 
