@@ -10,10 +10,15 @@ This library is Stream based for any endpoints that return multiple resources.
 Twitch.Stream.all |> Enum.take(5)
 Twitch.Stream.search("Hearthstone") |> Enum.take(5)
 Twitch.Stream.featured |> Enum.take(5)
+Twitch.Stream.get("twitch")
+
 Twitch.Game.top |> Enum.take(5)
 
-Twitch.Stream.get("twitch")
 Twitch.Channel.get("twitch")
+
+Twitch.Video.top |> Enum.take(5)
+"twitch" |> Twitch.Channel.get |> Twitch.Video.all |> Enum.take(5)
+Twitch.Video.get("v39161838")
 ```
 
 ## Installation

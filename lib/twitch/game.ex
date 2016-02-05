@@ -13,6 +13,14 @@ defmodule Twitch.Game do
     |> Stream.map(&Twitch.Game.Top.from_map/1)
   end
 
+  def get(id) do
+    "/videos/#{id}"
+    |> Twitch.get!
+    |> Map.fetch!(:body)
+    |> Poison.decode!
+    |> from_map
+  end
+
   def from_map(map) do
     atom_map = for {key, val} <- map, into: %{}, do: {String.to_atom(key), val}
 
