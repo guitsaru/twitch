@@ -4,6 +4,7 @@ defmodule Twitch.Game do
   defstruct id: 0,
     name: "",
     giantbomb_id: 0,
+    popularity: 0,
     box: %{},
     logo: %{}
 
@@ -13,12 +14,10 @@ defmodule Twitch.Game do
     |> Stream.map(&Twitch.Game.Top.from_map/1)
   end
 
-  def get(id) do
-    "/videos/#{id}"
-    |> Twitch.get!
-    |> Map.fetch!(:body)
-    |> Poison.decode!
-    |> from_map
+  def search(query) do
+    "/search/games?query=#{query}&type=suggest"
+    |> ResultStream.new("games")
+    |> Stream.map(&from_map/1)
   end
 
   def from_map(map) do

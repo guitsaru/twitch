@@ -13,6 +13,7 @@ Twitch.Stream.featured |> Enum.take(5)
 Twitch.Stream.get("twitch")
 
 Twitch.Game.top |> Enum.take(5)
+Twitch.Game.search("Hearthstone") |> Enum.take(5)
 
 Twitch.Channel.get("twitch")
 Twtich.Channel.search("Hearthstone") |> Enum.take(5)
