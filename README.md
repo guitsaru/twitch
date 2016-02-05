@@ -33,6 +33,8 @@ Twitch.User.get("twitch")
 Twitch.Team.all |> Enum.take(5)
 Twitch.Team.get("eg")
 "twitch" |> Twitch.Channel.get |> Twitch.Team.all |> Enum.take(5)
+
+Twitch.Ingest.all |> Enum.take(5)
 ```
 
 ## Installation
