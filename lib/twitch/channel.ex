@@ -1,4 +1,6 @@
 defmodule Twitch.Channel do
+  alias Twitch.ResultStream
+
   defstruct id: 0,
     mature: false,
     status: "",
@@ -20,6 +22,12 @@ defmodule Twitch.Channel do
     url: "",
     views: 0,
     followers: 0
+
+  def search(query) do
+    "/search/channels?query=#{query}"
+    |> ResultStream.new("channels")
+    |> Stream.map(&from_map/1)
+  end
 
   def get(name) do
     "/channels/#{name}"

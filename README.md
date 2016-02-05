@@ -15,6 +15,7 @@ Twitch.Stream.get("twitch")
 Twitch.Game.top |> Enum.take(5)
 
 Twitch.Channel.get("twitch")
+Twtich.Channel.search("Hearthstone") |> Enum.take(5)
 
 Twitch.Video.top |> Enum.take(5)
 "twitch" |> Twitch.Channel.get |> Twitch.Video.all |> Enum.take(5)
