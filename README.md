@@ -19,6 +19,11 @@ Twitch.Channel.get("twitch")
 Twitch.Video.top |> Enum.take(5)
 "twitch" |> Twitch.Channel.get |> Twitch.Video.all |> Enum.take(5)
 Twitch.Video.get("v39161838")
+
+Twitch.User.get("twitch")
+
+"twitch" |> Twitch.User.get |> Twitch.Follow.all |> Enum.take(5)
+"twitch" |> Twitch.Channel.get |> Twitch.Follow.all |> Enum.take(5)
 ```
 
 ## Installation

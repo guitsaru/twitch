@@ -29,9 +29,7 @@ defmodule Twitch.Stream do
 
   def get(name) do
     "/streams/#{name}"
-    |> Twitch.get!
-    |> Map.fetch!(:body)
-    |> Poison.decode!
+    |> Twitch.fetch!
     |> Map.fetch!("stream")
     |> from_map
   end
