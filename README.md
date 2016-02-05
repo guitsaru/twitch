@@ -24,6 +24,10 @@ Twitch.User.get("twitch")
 
 "twitch" |> Twitch.User.get |> Twitch.Follow.all |> Enum.take(5)
 "twitch" |> Twitch.Channel.get |> Twitch.Follow.all |> Enum.take(5)
+
+Twitch.Team.all |> Enum.take(5)
+Twitch.Team.get("eg")
+"twitch" |> Twitch.Channel.get |> Twitch.Team.all |> Enum.take(5)
 ```
 
 ## Installation

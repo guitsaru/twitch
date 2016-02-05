@@ -10,7 +10,7 @@ defmodule Twitch.ResultStream do
     json = path |> Twitch.get! |> Map.fetch!(:body) |> Poison.decode!
 
     items = get_in(json, [key])
-    next  = get_in(json, ["_links", "next"]) |> String.replace("https://api.twitch.tv/kraken", "")
+    next  = get_in(json, ["_links", "next"])
 
     {items, next}
   end
@@ -25,6 +25,7 @@ defmodule Twitch.ResultStream do
 
   defp process_page({nil, next_page}, key) do
     next_page
+    |> String.replace("https://api.twitch.tv/kraken", "")
     |> fetch_page(key)
     |> process_page(key)
   end
